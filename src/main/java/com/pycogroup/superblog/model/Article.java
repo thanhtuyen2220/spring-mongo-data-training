@@ -1,8 +1,6 @@
 package com.pycogroup.superblog.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -10,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "articles")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
 	@Id
 	@Getter
@@ -28,5 +28,10 @@ public class Article {
 	@Setter
 	@DBRef
 	private User author;
+
+	@Getter
+	@Setter
+	@DBRef
+	private Category category;
 
 }

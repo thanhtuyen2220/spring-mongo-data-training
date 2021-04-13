@@ -37,7 +37,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
-
+    put:
+      tags:
+        - categorizeArticle
+      summary: Update article
+      operationId: updateCategoryArticle
+      requestBody:
+        description: Update Category article
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCategoryArticleRequest'
+      responses:
+        '200':
+          description: Update Category successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /articles/{ArticleId}:
+    delete:
+      summary: DeleteArticle
+      operationId: DeleteArticle
+      parameters:
+        - name: ArticleId
+          in: path
+          description: Article ID
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: Delete article successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
   /users:
     get:
       tags:
@@ -70,6 +106,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /categories:
+    post:
+      tags:
+        - createCategory
+      summary: Create category
+      operationId: createCategory
+      requestBody:
+        description: Create category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryRequest'
+      responses:
+        '200':
+          description: Create category successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+    get:
+      tags:
+        - getCategoriesList
+      summary: Get all category
+      operationId: getCategoryList
+      responses:
+        '200':
+          description: Get category list successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryListResponse'
+
   /users/find-by-email:
     get:
       tags:
@@ -89,6 +157,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
+  /comments:
+    post:
+      tags:
+        - createComment
+      summary: Create Comment
+      operationId: createComment
+      requestBody:
+        description: Create Comment on article
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+      responses:
+        '200':
+          description: Create comment successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
 
 components:
   schemas:
@@ -125,6 +212,8 @@ components:
           type: string
         authorId:
           type: string
+        categoryName:
+          type: String
     CreateArticleRequest:
       type: object
       properties:
@@ -134,6 +223,8 @@ components:
           type: string
         authorId:
           type: string
+        category:
+          type: string
     CreateUserRequest:
       type: object
       properties:
@@ -141,7 +232,43 @@ components:
           type: string
         email:
           type: string
-
+    CategoryListResponse:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryResponseModel'
+    CategoryResponseModel:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    CreateCategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    UpdateCategoryArticleRequest:
+      type: object
+      properties:
+        articleId:
+          type: string
+        categoryName:
+          type: string
+    CreateCommentRequest:
+      type: object
+      properties:
+        content:
+          type: string
+        articleId:
+          type: string
+        userAuthorId:
+          type: string
 
     ObjectCreationSuccessResponse:
       type: object

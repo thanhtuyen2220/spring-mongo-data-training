@@ -3,6 +3,7 @@ package com.pycogroup.superblog.service;
 import com.pycogroup.superblog.model.QUser;
 import com.pycogroup.superblog.model.User;
 import com.pycogroup.superblog.repository.UserRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,11 @@ public class UserServiceImp implements UserService {
 	@Override
 	public User findUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User findUserById(ObjectId id) {
+		return userRepository.findUserById(id);
 	}
 
 	@Override
