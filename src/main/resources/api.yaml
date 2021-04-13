@@ -4,7 +4,7 @@ info:
   version: v3
   title: SuperBlog microservice API
 servers:
-  - url: http://localhost:8080/
+  - url: 'http://localhost:8080/'
 paths:
   /articles:
     get:
@@ -27,7 +27,7 @@ paths:
       requestBody:
         description: Create article
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateArticleRequest'
       responses:
@@ -55,7 +55,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
-  /articles/{ArticleId}:
+  '/articles/{ArticleId}':
     delete:
       summary: DeleteArticle
       operationId: DeleteArticle
@@ -87,7 +87,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
-
     post:
       tags:
         - createUser
@@ -96,7 +95,7 @@ paths:
       requestBody:
         description: Create user
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateUserRequest'
       responses:
@@ -137,7 +136,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoryListResponse'
-
   /users/find-by-email:
     get:
       tags:
@@ -176,6 +174,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /comments/activate:
+    put:
+      summary: Update the status of comment by Id
+      description: Update the status of comment by Id
+      operationId: UpdateCommentById
+      requestBody:
+        description: Update Status of comment by id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRejectedCommentStatusRequest'
+      responses:
+        '200':
+          description: Update Category successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /comments/deactivate:
+    put:
+      summary: Update the status of comment by Id
+      description: Update the status of comment by Id
+      operationId: UpdateCommentStatusById
+      requestBody:
+        description: Update Status of comment by id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAcceptedCommentStatusRequest'
+      responses:
+        '200':
+          description: Update Category successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
 
 components:
   schemas:
@@ -193,7 +227,6 @@ components:
           type: string
         email:
           type: string
-
     ArticleListResponse:
       type: object
       properties:
@@ -213,7 +246,7 @@ components:
         authorId:
           type: string
         categoryName:
-          type: String
+          type: string
     CreateArticleRequest:
       type: object
       properties:
@@ -260,6 +293,16 @@ components:
           type: string
         categoryName:
           type: string
+    UpdateRejectedCommentStatusRequest:
+      type: object
+      properties:
+        commentId:
+          type: string
+    UpdateAcceptedCommentStatusRequest:
+      type: object
+      properties:
+        commentId:
+          type: string
     CreateCommentRequest:
       type: object
       properties:
@@ -269,7 +312,6 @@ components:
           type: string
         userAuthorId:
           type: string
-
     ObjectCreationSuccessResponse:
       type: object
       properties:
@@ -277,14 +319,13 @@ components:
           type: string
         responseCode:
           type: integer
-
     ApiError:
       type: object
       properties:
         faults:
           type: array
           items:
-            $ref: "#/components/schemas/Fault"
+            $ref: '#/components/schemas/Fault'
         responseCode:
           type: integer
     Fault:
@@ -296,14 +337,15 @@ components:
           type: integer
         userMessage:
           type: string
-
   examples:
     InternalServerError:
       value:
         responseCode: 500
         faults:
-          -:
-          userMessage: There're some error when processing this request. Please retry again or contact the site administrator for supporting
+          '-': null
+          userMessage: >-
+            There're some error when processing this request. Please retry again
+            or contact the site administrator for supporting
           internalMessage: Internal server error
           code: 1000
           responseCode: 500

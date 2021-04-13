@@ -29,13 +29,13 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public Comment activateCommentById(String commentId) {
-        return null;
+    public void activateCommentById(ObjectId commentId){
+        commentRepository.activateCommentById(commentId);
     }
 
     @Override
-    public Comment deactivateCommentById(String commentId) {
-        return null;
+    public void deactivateCommentById(ObjectId commentId) {
+        commentRepository.deactivateCommentById(commentId);
     }
 
 

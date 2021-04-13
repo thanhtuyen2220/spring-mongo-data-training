@@ -3,6 +3,8 @@ package com.pycogroup.superblog.controller;
 import com.pycogroup.superblog.api.CommentsApi;
 import com.pycogroup.superblog.api.model.CreateCommentRequest;
 import com.pycogroup.superblog.api.model.ObjectCreationSuccessResponse;
+import com.pycogroup.superblog.api.model.UpdateAcceptedCommentStatusRequest;
+import com.pycogroup.superblog.api.model.UpdateRejectedCommentStatusRequest;
 import com.pycogroup.superblog.model.Article;
 import com.pycogroup.superblog.model.Comment;
 import com.pycogroup.superblog.model.User;
@@ -45,4 +47,24 @@ public class CommentController implements CommentsApi {
         result.setResponseCode(HttpStatus.CREATED.value());
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+    @Override
+    public ResponseEntity<ObjectCreationSuccessResponse> updateCommentById(@Valid UpdateRejectedCommentStatusRequest updateRejectedCommentStatusRequest) {
+        commentService.activateCommentById(new ObjectId(updateRejectedCommentStatusRequest.getCommentId()));
+        ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
+        result.setId(updateRejectedCommentStatusRequest.getCommentId());
+        result.setResponseCode(HttpStatus.CREATED.value());
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<ObjectCreationSuccessResponse> updateCommentStatusById(@Valid UpdateAcceptedCommentStatusRequest updateAcceptedCommentStatusRequest) {
+        commentService.deactivateCommentById(new ObjectId(updateAcceptedCommentStatusRequest.getCommentId()));
+        ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
+        result.setId(updateAcceptedCommentStatusRequest.getCommentId());
+        result.setResponseCode(HttpStatus.CREATED.value());
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+
 }
